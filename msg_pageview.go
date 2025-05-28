@@ -2,6 +2,8 @@ package analytics
 
 import "strings"
 
+const PageViewEventPrefix = "pageview:"
+
 var _ Message = (*page)(nil)
 var _ Pageview = (*page)(nil)
 
@@ -14,7 +16,7 @@ type Pageview interface {
 }
 
 func NewPageview(host, path string) Pageview {
-	m := message{event: host + "/" + strings.TrimPrefix(path, "/")}
+	m := newMessage(PageViewEventPrefix + host + "/" + strings.TrimPrefix(path, "/"))
 	return &page{message: m, host: host, path: path}
 }
 

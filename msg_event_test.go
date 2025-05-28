@@ -7,6 +7,7 @@ import (
 
 func TestNewEvent(t *testing.T) {
 	type args struct {
+		name     string
 		category string
 		action   string
 	}
@@ -18,15 +19,16 @@ func TestNewEvent(t *testing.T) {
 		{
 			name: "should_pass",
 			args: args{
-				category: "test1",
-				action:   "test2",
+				name:     "event1",
+				category: "category1",
+				action:   "action1",
 			},
-			want: &event{category: "test1", action: "test2"},
+			want: &event{message: message{event: "event1", properties: map[string]any{}}, category: "category1", action: "action1"},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := NewEvent(tt.args.category, tt.args.action); !reflect.DeepEqual(got, tt.want) {
+			if got := NewEvent(tt.args.name, tt.args.category, tt.args.action); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("NewEvent() = %v, want %v", got, tt.want)
 			}
 		})

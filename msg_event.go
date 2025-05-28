@@ -15,6 +15,10 @@ type Event interface {
 	SetValue(uint) Event
 }
 
+func NewEvent(name, category, action string) Event {
+	return &event{message: newMessage(name), category: category, action: action}
+}
+
 type event struct {
 	message
 	category string `key:"ec" required:"true"`
@@ -50,10 +54,6 @@ func (v *event) Validate() error {
 		return errors.New("action is required")
 	}
 	return nil
-}
-
-func NewEvent(category string, action string) Event {
-	return &event{category: category, action: action}
 }
 
 func (v *event) SetLabel(label string) Event {

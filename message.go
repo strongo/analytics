@@ -14,11 +14,20 @@ type Message interface {
 
 var _ Message = (*message)(nil)
 
+func newMessage(event string) message {
+	return message{event: event, properties: make(Properties, 10)}
+}
+
 type message struct {
 	ApiClientID string
 	event       string
 	category    string
 	user        UserContext
+	properties  Properties
+}
+
+func (m *message) Properties() Properties {
+	return m.properties
 }
 
 func (m *message) Validate() error {

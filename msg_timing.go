@@ -13,7 +13,7 @@ type Timing interface {
 }
 
 func NewTiming(event string, duration time.Duration) Timing {
-	return &timing{message: message{event: event}, duration: duration}
+	return &timing{message: newMessage(event), duration: duration}
 }
 
 type timing struct {

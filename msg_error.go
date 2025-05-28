@@ -1,5 +1,7 @@
 package analytics
 
+const ErrorEvent = "error"
+
 var _ Message = (ErrorMessage)(nil)
 
 type ErrorMessage interface {
@@ -8,7 +10,10 @@ type ErrorMessage interface {
 }
 
 func NewErrorMessage(err error) ErrorMessage {
-	return &errorMessage{message: message{event: "error"}, err: err}
+	return &errorMessage{
+		message: newMessage(ErrorEvent),
+		err:     err,
+	}
 }
 
 var _ Message = (*errorMessage)(nil)
