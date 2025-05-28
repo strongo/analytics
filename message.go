@@ -8,6 +8,8 @@ type Message interface {
 	GetApiClientID() string
 	User() UserContext
 	SetUserContext(user UserContext)
+	Category() string
+	SetCategory(category string)
 }
 
 var _ Message = (*message)(nil)
@@ -15,23 +17,8 @@ var _ Message = (*message)(nil)
 type message struct {
 	ApiClientID string
 	event       string
+	category    string
 	user        UserContext
-}
-
-func (m *message) Event() string {
-	return m.event
-}
-
-func (m *message) GetApiClientID() string {
-	return m.ApiClientID
-}
-
-func (m *message) User() UserContext {
-	return m.user
-}
-
-func (m *message) SetUserContext(user UserContext) {
-	m.user = user
 }
 
 func (m *message) Validate() error {
@@ -45,4 +32,28 @@ func (m *message) Validate() error {
 		return err
 	}
 	return nil
+}
+
+func (m *message) GetApiClientID() string {
+	return m.ApiClientID
+}
+
+func (m *message) Event() string {
+	return m.event
+}
+
+func (m *message) Category() string {
+	return m.category
+}
+
+func (m *message) SetCategory(category string) {
+	m.category = category
+}
+
+func (m *message) User() UserContext {
+	return m.user
+}
+
+func (m *message) SetUserContext(user UserContext) {
+	m.user = user
 }
