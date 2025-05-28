@@ -6,7 +6,7 @@ import (
 )
 
 type Sender interface {
-	QueueMessage(message Message)
+	QueueMessage(ctx context.Context, message Message)
 }
 
 var senders []Sender
@@ -17,7 +17,7 @@ func QueueMessage(ctx context.Context, msg Message) {
 		return
 	}
 	for _, sender := range senders {
-		sender.QueueMessage(msg)
+		sender.QueueMessage(ctx, msg)
 	}
 }
 
