@@ -2,7 +2,7 @@ package analytics
 
 import "strings"
 
-const PageViewEventPrefix = "pageview:"
+//const PageViewEventPrefix = "page:"
 
 var _ Message = (*page)(nil)
 var _ Pageview = (*page)(nil)
@@ -13,18 +13,25 @@ type Pageview interface {
 	Path() string
 	Title() string
 	SetTitle(title string) Pageview
+	SetUserAgent(userAgent string) Pageview
 }
 
 func NewPageview(host, path string) Pageview {
-	m := newMessage(PageViewEventPrefix + host + "/" + strings.TrimPrefix(path, "/"))
+	m := newMessage("$pageview")
+	m.properties.Set("$host", host)
+	if !strings.HasPrefix(path, "/") {
+		path = "/" + path
+	}
+	m.properties.Set("$pathname", path)
 	return &page{message: m, host: host, path: path}
 }
 
 type page struct {
 	message
-	host  string `key:"ph"`
-	path  string `key:"pp"`
-	title string `key:"pt"`
+	host      string `key:"ph"`
+	path      string `key:"pp"`
+	title     string `key:"pt"`
+	userAgent string `key:"ua"`
 }
 
 func (v *page) Host() string {
@@ -40,6 +47,11 @@ func (v *page) Title() string {
 
 func (v *page) SetTitle(title string) Pageview {
 	v.title = title
+	return v
+}
+
+func (v *page) SetUserAgent(userAgent string) Pageview {
+	v.userAgent = userAgent
 	return v
 }
 
