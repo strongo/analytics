@@ -3,6 +3,7 @@ package analytics
 import "errors"
 
 type Message interface {
+	Properties() Properties
 	Event() string
 	Validate() error
 	GetApiClientID() string

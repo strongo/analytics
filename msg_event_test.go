@@ -23,7 +23,7 @@ func TestNewEvent(t *testing.T) {
 				category: "category1",
 				action:   "action1",
 			},
-			want: &event{message: message{event: "event1", properties: map[string]any{}}, category: "category1", action: "action1"},
+			want: &event{message: newMessage("event1"), category: "category1", action: "action1"},
 		},
 	}
 	for _, tt := range tests {
