@@ -3,15 +3,23 @@ package analytics
 import "errors"
 
 type Message interface {
+	Event() string
 	Validate() error
 	GetApiClientID() string
 	User() UserContext
 	SetUserContext(user UserContext)
 }
 
+var _ Message = (*message)(nil)
+
 type message struct {
 	ApiClientID string
+	event       string
 	user        UserContext
+}
+
+func (m *message) Event() string {
+	return m.event
 }
 
 func (m *message) GetApiClientID() string {
@@ -27,6 +35,9 @@ func (m *message) SetUserContext(user UserContext) {
 }
 
 func (m *message) Validate() error {
+	if m.event == "" {
+		return errors.New("event is required")
+	}
 	if m.ApiClientID == "" {
 		return errors.New("missing api client id")
 	}

@@ -5,15 +5,28 @@ import (
 	"time"
 )
 
-var _ Message = (*Timing)(nil)
+var _ Message = (*timing)(nil)
 
-type Timing struct {
-	message
-	Duration time.Duration `json:"duration"`
+type Timing interface {
+	Message
+	Duration() time.Duration
 }
 
-func (timing *Timing) Validate() error {
-	if timing.Duration == 0 {
+func NewTiming(event string, duration time.Duration) Timing {
+	return &timing{message: message{event: event}, duration: duration}
+}
+
+type timing struct {
+	message
+	duration time.Duration `key:"td" required:"true"`
+}
+
+func (t *timing) Duration() time.Duration {
+	return t.duration
+}
+
+func (t *timing) Validate() error {
+	if t.duration == 0 {
 		return fmt.Errorf("timing duration is zero")
 	}
 	return nil
