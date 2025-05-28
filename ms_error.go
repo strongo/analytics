@@ -1,6 +1,9 @@
 package analytics
 
+var _ Message = (ErrorMessage)(nil)
+
 type ErrorMessage interface {
+	Message
 	ErrorText() string
 }
 
