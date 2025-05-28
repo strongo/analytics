@@ -34,9 +34,6 @@ func (m *message) Validate() error {
 	if m.event == "" {
 		return errors.New("event is required")
 	}
-	if m.ApiClientID == "" {
-		return errors.New("missing api client id")
-	}
 	if err := m.user.Validate(); err != nil {
 		return err
 	}
