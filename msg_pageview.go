@@ -1,6 +1,9 @@
 package analytics
 
-import "strings"
+import (
+	"net/url"
+	"strings"
+)
 
 //const PageViewEventPrefix = "page:"
 
@@ -23,15 +26,19 @@ func NewPageview(host, path string) Pageview {
 		path = "/" + path
 	}
 	m.properties.Set("$pathname", path)
+	if host == "telegram" && strings.HasPrefix(path, "/bot/") {
+		m.properties.Set("$current_url", "tg://"+path[len("/bot/"):])
+	}
 	return &page{message: m, host: host, path: path}
 }
 
 type page struct {
 	message
-	host      string `key:"ph"`
-	path      string `key:"pp"`
-	title     string `key:"pt"`
-	userAgent string `key:"ua"`
+	host      string   `key:"ph"`
+	path      string   `key:"pp"`
+	url       *url.URL `key:"url"`
+	title     string   `key:"pt"`
+	userAgent string   `key:"ua"`
 }
 
 func (v *page) Host() string {

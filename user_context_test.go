@@ -12,8 +12,13 @@ func TestUserContext(t *testing.T) {
 
 	ctx := context.Background()
 
-	pageView := NewPageview("unit-test", "TestUserContext").
+	pageView := NewPageview("telegram", "/bot/TestBot/some/path").
 		SetTitle("Test User Context")
 
+	props := pageView.Properties()
+	const expectedUrl = "tg://TestBot/some/path"
+	if currentUrl := props["$current_url"]; currentUrl != expectedUrl {
+		t.Errorf("expected %s, got %s", expectedUrl, currentUrl)
+	}
 	uc.QueueMessage(ctx, pageView)
 }
