@@ -13,10 +13,12 @@ type Message interface {
 	SetCategory(category string)
 }
 
+const defaultPropertiesCapacity = 10
+
 var _ Message = (*message)(nil)
 
 func newMessage(event string) message {
-	return message{event: event, properties: make(Properties, 10)}
+	return message{event: event, properties: make(Properties, defaultPropertiesCapacity)}
 }
 
 type message struct {

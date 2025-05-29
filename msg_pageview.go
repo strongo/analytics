@@ -15,18 +15,15 @@ type Pageview interface {
 	Path() string
 	Title() string
 	SetTitle(title string) Pageview
+	URL() string
+	SetURL(url string) Pageview
 	SetUserAgent(userAgent string) Pageview
 }
 
 func NewPageview(host, path string) Pageview {
 	m := newMessage("$pageview")
-	m.properties.Set("$host", host)
 	if !strings.HasPrefix(path, "/") {
 		path = "/" + path
-	}
-	m.properties.Set("$pathname", path)
-	if host == "telegram" && strings.HasPrefix(path, "/bot/") {
-		m.properties.Set("$current_url", "tg://"+path[len("/bot/"):])
 	}
 	return &page{message: m, host: host, path: path}
 }
@@ -35,6 +32,7 @@ type page struct {
 	message
 	host      string `key:"ph"`
 	path      string `key:"pp"`
+	url       string `key:"pu"`
 	title     string `key:"pt"`
 	userAgent string `key:"ua"`
 }
@@ -42,8 +40,13 @@ type page struct {
 func (v *page) Host() string {
 	return v.host
 }
+
 func (v *page) Path() string {
 	return v.path
+}
+
+func (v *page) URL() string {
+	return v.url
 }
 
 func (v *page) Title() string {
@@ -57,6 +60,11 @@ func (v *page) SetTitle(title string) Pageview {
 
 func (v *page) SetUserAgent(userAgent string) Pageview {
 	v.userAgent = userAgent
+	return v
+}
+
+func (v *page) SetURL(url string) Pageview {
+	v.url = url
 	return v
 }
 
