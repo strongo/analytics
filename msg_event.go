@@ -7,11 +7,14 @@ var _ Event = (*event)(nil)
 
 type Event interface {
 	Message
-	Category() string
+
 	Action() string
+	SetAction(string) Event
+
 	Label() string
-	Value() uint
 	SetLabel(string) Event
+
+	Value() uint
 	SetValue(uint) Event
 }
 
@@ -25,10 +28,6 @@ type event struct {
 	action   string `key:"ea" required:"true"`
 	label    string `key:"el"`
 	value    uint   `key:"ev"`
-}
-
-func (v *event) Category() string {
-	return v.category
 }
 
 func (v *event) Action() string {
@@ -54,6 +53,11 @@ func (v *event) Validate() error {
 		return errors.New("action is required")
 	}
 	return nil
+}
+
+func (v *event) SetAction(action string) Event {
+	v.action = action
+	return v
 }
 
 func (v *event) SetLabel(label string) Event {
