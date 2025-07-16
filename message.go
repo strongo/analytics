@@ -3,13 +3,16 @@ package analytics
 import "errors"
 
 type Message interface {
-	Properties() Properties
 	Event() string
-	Validate() error
-	GetApiClientID() string
 	User() UserContext
 	SetUserContext(user UserContext)
+	Properties() Properties
+	Validate() error
+	GetApiClientID() string
+
+	// Category retrieves the category of the message.
 	Category() string
+	// SetCategory sets the category value for the message.
 	SetCategory(category string)
 }
 
