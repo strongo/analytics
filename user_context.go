@@ -27,6 +27,12 @@ func (v *UserContext) SetUserAgent(s string) *UserContext {
 }
 
 func (v *UserContext) QueueMessage(ctx context.Context, msg Message) {
+	if v == nil {
+		panic("QueueMessage() called on nil UserContext")
+	}
+	if msg == nil {
+		panic("func *UserContext.QueueMessage(msg=nil)")
+	}
 	msg.SetUserContext(*v)
 	QueueMessage(ctx, msg)
 }
