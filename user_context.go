@@ -71,5 +71,6 @@ func (v *userContext) QueueMessage(ctx context.Context, msg Message) {
 		}
 	}
 	msg.SetUserContext(v)
+
 	QueueMessage(ctx, msg)
 }
