@@ -16,6 +16,9 @@ type Event interface {
 
 	Value() uint
 	SetValue(uint) Event
+
+	Title() string
+	SetTitle(string) Event
 }
 
 func NewEvent(name, category, action string) Event {
@@ -28,6 +31,16 @@ type event struct {
 	action   string `key:"ea" required:"true"`
 	label    string `key:"el"`
 	value    uint   `key:"ev"`
+	title    string `key:"et"`
+}
+
+func (v *event) Title() string {
+	return v.title
+}
+
+func (v *event) SetTitle(s string) Event {
+	v.title = s
+	return v
 }
 
 func (v *event) Action() string {
