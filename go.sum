@@ -4,3 +4,5 @@ github.com/strongo/logus v0.4.0 h1:EdwNafWX1eGWvPqMvu3gHVqXtBOUvV9KWbxm6tCU+dU=
 github.com/strongo/logus v0.4.0/go.mod h1:sd8gjJklqGQAg+Q0mlP5MWgzguAuxR25YYFSkfVOPdc=
 github.com/strongo/logus v0.4.1 h1:jEkcT5JzawDYjexRVHkCQiG4tv6Bm2a/c/ZdLk0IPqM=
 github.com/strongo/logus v0.4.1/go.mod h1:sd8gjJklqGQAg+Q0mlP5MWgzguAuxR25YYFSkfVOPdc=
+github.com/strongo/logus v0.4.3 h1:hAT2VNAj41SXta7A2bRPmk/RgWXAO930faHga5Fc58w=
+github.com/strongo/logus v0.4.3/go.mod h1:seJ+rxoeqfq1mS8LHlVfmS3ZfO+aTzeX0eW+zvpkH8U=
