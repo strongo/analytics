@@ -24,10 +24,28 @@ func Test_page_SetTitle(t *testing.T) {
 	const expectedTitle = "Unit Test"
 
 	pageView := NewPageview(expectedHost, expectedPathWithLeadingSlash).
-		SetTitle(expectedTitle)
+		SetTitle(expectedTitle).
+		SetUserAgent("Mozilla/5.0")
 
 	if title := pageView.Title(); title != expectedTitle {
 		t.Errorf("expected %s, got %s", expectedTitle, title)
+	}
+
+	if host := pageView.Host(); host != expectedHost {
+		t.Errorf("expected %s, got %s", expectedHost, host)
+	}
+
+	if path := pageView.Path(); path != expectedPathWithLeadingSlash {
+		t.Errorf("expected %s, got %s", expectedPathWithLeadingSlash, path)
+	}
+
+	if err := pageView.Validate(); err != nil {
+		t.Errorf("expected valid pageview, got %v", err)
+	}
+
+	invalidPage := &page{message: message{event: ""}}
+	if err := invalidPage.Validate(); err == nil {
+		t.Error("expected validation error for empty event")
 	}
 }
 

@@ -31,8 +31,5 @@ func (e *errorMessage) Validate() error {
 	if err := e.err; err != nil {
 		return err
 	}
-	if e.err == nil {
-		return nil
-	}
 	return nil
 }

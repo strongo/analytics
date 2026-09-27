@@ -40,8 +40,10 @@ func (m *message) Validate() error {
 	if m.event == "" {
 		return errors.New("event is required")
 	}
-	if err := m.user.Validate(); err != nil {
-		return err
+	if m.user != nil {
+		if err := m.user.Validate(); err != nil {
+			return err
+		}
 	}
 	return nil
 }
