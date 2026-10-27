@@ -18,12 +18,13 @@ func TestSender(t *testing.T) {
 
 	// Panics on nil ctx
 	func() {
+		var nilContext context.Context
 		defer func() {
 			if r := recover(); r == nil {
 				t.Error("expected panic on nil ctx")
 			}
 		}()
-		QueueMessage(nil, &message{})
+		QueueMessage(nilContext, &message{})
 	}()
 
 	// Panics on nil msg
